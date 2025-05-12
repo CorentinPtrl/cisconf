@@ -3,6 +3,7 @@ package internal
 import (
 	"fmt"
 	"github.com/CorentinPtrl/cisconf/internal/utils"
+	"github.com/mcuadros/go-defaults"
 	"reflect"
 	"regexp"
 	"strconv"
@@ -10,6 +11,7 @@ import (
 )
 
 func Parse(data string, v any) error {
+	defaults.SetDefaults(v)
 	vValue := reflect.ValueOf(v)
 	t := reflect.TypeOf(v).Elem()
 	re := regexp.MustCompile(`(?m)^\s*$[\r\n]*|[\r\n]+\s+\z`)
