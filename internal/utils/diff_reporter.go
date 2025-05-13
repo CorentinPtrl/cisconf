@@ -43,8 +43,8 @@ func (r *DiffReporter) PushStep(ps cmp.PathStep) {
 		}
 
 		lenX, lenY := vx.Len(), vy.Len()
-		if lenX != lenY && lenX > lenY {
-			for i := lenY; i < lenX; i++ {
+		if lenX != lenY && lenY > lenX {
+			for i := lenX; i < lenY; i++ {
 				r.fields = append(r.fields, fmt.Sprintf("%s[%d]", printPath(append(r.path, ps)), i))
 			}
 		}

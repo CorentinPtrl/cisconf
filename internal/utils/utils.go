@@ -46,17 +46,6 @@ func GetValueAndField(data interface{}, path string) (*reflect.Value, *reflect.S
 			index, _ := strconv.Atoi(matches[2])
 
 			if fieldName != "" {
-				/*defer func() {
-					strName := fieldName
-					valn := val
-					pathn := path
-					fmt.Println("defer fieldName", strName)
-					fmt.Println("defer val", valn.Interface())
-					fmt.Println("defer path", pathn)
-					if r := recover(); r != nil {
-						fmt.Println("recovered in GetValueAndField", r)
-					}
-				}()*/
 				field, found := typ.FieldByName(fieldName)
 				if !found {
 					return nil, nil, fmt.Errorf("field %s not found", fieldName)
