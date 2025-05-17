@@ -199,6 +199,10 @@ func GenerateFieldByPath(parsed any, path string, reverse bool) (string, error) 
 		return "", err
 	}
 
+	if structField.Type.Kind() == reflect.Bool {
+		return "", nil
+	}
+	
 	cmd, err := GenerateField(*structField, *val, reverse)
 	if err != nil {
 		return "", err

@@ -17,8 +17,9 @@ type CiscoInterface struct {
 	PortSecurity          bool                 `reg:"switchport port-security" cmd:"switchport port-security"`
 	Description           string               `reg:"description ([[:print:]]+)" cmd:"description %s"`
 	NativeVlan            int                  `reg:"switchport trunk native vlan ([0-9]+)" cmd:"switchport trunk native vlan %d"`
-	TrunkAllowedVlan      []int                `reg:"switchport trunk allowed vlan( add)? ([\\d,-]+)" cmd:"switchport trunk allowed vlan %s"`
+	Encapsulation         string               `reg:"switchport trunk encapsulation ([[:print:]]+)" cmd:"switchport trunk encapsulation %s"`
 	Trunk                 bool                 `reg:"switchport mode trunk" cmd:"switchport mode trunk"`
+	TrunkAllowedVlan      []int                `reg:"switchport trunk allowed vlan( add)? ([\\d,-]+)" cmd:"switchport trunk allowed vlan %s"`
 	Shutdown              bool                 `reg:"shutdown" cmd:"shutdown" default:"false"`
 	SCBroadcastLevel      float64              `reg:"storm-control broadcast level ([0-9\\.]+)" cmd:"storm-control broadcast level %.2f"`
 	STPPortFast           string               `reg:"spanning-tree portfast (disable|edge|network)" cmd:"spanning-tree portfast %s"`
