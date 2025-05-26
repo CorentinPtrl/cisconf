@@ -132,6 +132,9 @@ func ProcessParse(part string, parsed any) error {
 		tag := field.Tag.Get("reg")
 
 		if field.Tag.Get("reg") == "" && field.Tag.Get("preg") == "" {
+			if field.Type.Kind() != reflect.Struct {
+				continue
+			}
 			err := ProcessParse(part, tmp.Field(i).Addr().Interface())
 			if err != nil {
 				return err

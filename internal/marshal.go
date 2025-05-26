@@ -63,6 +63,9 @@ func Generate(src any, dest any) (string, error) {
 }
 
 func GenerateFlat(src any, dest any, i int, config string) (string, error) {
+	if reflect.ValueOf(dest).Field(i).Kind() != reflect.Struct {
+		return config, nil
+	}
 	flatten, err := Generate(reflect.ValueOf(src).Field(i).Interface(), reflect.ValueOf(dest).Field(i).Interface())
 	if err != nil {
 		return "", err
