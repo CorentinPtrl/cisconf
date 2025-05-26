@@ -131,6 +131,13 @@ func ProcessParse(part string, parsed any) error {
 		field := rt.Field(i)
 		tag := field.Tag.Get("reg")
 
+		if field.Tag.Get("reg") == "" && field.Tag.Get("preg") == "" {
+			err := ProcessParse(part, tmp.Field(i).Addr().Interface())
+			if err != nil {
+				return err
+			}
+		}
+
 		if tag != "" {
 			re := regexp.MustCompile("(?:no\\s+)?" + tag)
 			// @todo check if no is with the command!

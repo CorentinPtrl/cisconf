@@ -22,7 +22,12 @@ func Generate(src any, dest any) (string, error) {
 		return "", err
 	}
 	for i := 0; i < t.NumField(); i++ {
-		if t.Field(i).Tag.Get("preg") != "" {
+		if t.Field(i).Tag.Get("reg") == "" && t.Field(i).Tag.Get("preg") == "" && t.Field(i).Tag.Get("parent") == "" {
+			config, err = GenerateFlat(src, dest, i, config)
+			if err != nil {
+				return "", err
+			}
+		} else if t.Field(i).Tag.Get("preg") != "" {
 			config, _, err = GeneratePart(src, dest, i, t, config)
 			if err != nil {
 				return "", err
@@ -55,6 +60,24 @@ func Generate(src any, dest any) (string, error) {
 	}
 	config = config + "!"
 	return parent + "\n" + config + "\n", nil
+}
+
+func GenerateFlat(src any, dest any, i int, config string) (string, error) {
+	flatten, err := Generate(reflect.ValueOf(src).Field(i).Interface(), reflect.ValueOf(dest).Field(i).Interface())
+	if err != nil {
+		return "", err
+	}
+	for k, s := range strings.Split(flatten, "\n") {
+		if strings.TrimSpace(s) == "" {
+			continue
+		}
+		if k == len(strings.Split(flatten, "\n"))-1 {
+			config = config + s
+			continue
+		}
+		config = config + s + "\n"
+	}
+	return config, nil
 }
 
 func GenerateParent(src any) (string, error) {
@@ -202,7 +225,7 @@ func GenerateFieldByPath(parsed any, path string, reverse bool) (string, error) 
 	if structField.Type.Kind() == reflect.Bool {
 		return "", nil
 	}
-	
+
 	cmd, err := GenerateField(*structField, *val, reverse)
 	if err != nil {
 		return "", err
@@ -260,11 +283,6 @@ func generateCMD(field reflect.Value, tag, defaultval string, reverse bool) stri
 		} else if reverse {
 			return tag
 		}
-		concreteDefault, _ := strconv.ParseBool(defaultval)
-		if value == concreteDefault {
-			return ""
-		}
-
 		if !value && defaultval != "" && !reverse {
 			return "no " + tag
 		} else if !value {
