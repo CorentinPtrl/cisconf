@@ -9,7 +9,7 @@ type CiscoInterface struct {
 	Parent                CiscoInterfaceParent `reg:"interface.*" cmd:"interface" parent:"true"`
 	Switchport            bool                 `cmd:"switchport" reg:"switchport" default:"true"`
 	Access                bool                 `reg:"switchport mode access" cmd:"switchport mode access"`
-	AccessVlan            int                  `reg:"switchport access vlan ([0-9]+)" cmd:"switchport access vlan %d"`
+	AccessVlan            int                  `reg:"switchport access vlan ([0-9]+)" cmd:"switchport access vlan %d" default:"1"`
 	VoiceVlan             int                  `reg:"switchport voice vlan ([0-9]+)" cmd:"switchport voice vlan %d"`
 	PortSecurityMaximum   int                  `reg:"switchport port-security maximum ([0-9]+)" cmd:"switchport port-security maximum %d"`
 	PortSecurityViolation string               `reg:"switchport port-security violation (protect|restrict|shutdown)" cmd:"switchport port-security violation %s"`

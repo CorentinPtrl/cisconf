@@ -7,5 +7,5 @@ type Eigrp struct {
 
 type EigrpNetwork struct {
 	NetworkNumber string `reg:"network (\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3})(?: (\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}))?" cmd:" %s"`
-	WildCard      string `reg:"network (?:\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}) (\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3})" cmd:" %s"`
+	WildCard      string `reg:"network (?:\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}) (\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3})" cmd:" %s" default:"0.0.0.255"`
 }

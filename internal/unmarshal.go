@@ -178,6 +178,11 @@ func ProcessParse(part string, parsed any) error {
 				}
 				tmp.Field(i).Set(fieldValue)
 			case reflect.Slice:
+				re = regexp.MustCompile("no\\s+" + tag)
+				nodata := re.FindAllStringSubmatch(part, -1)
+				if nodata != nil {
+					continue
+				}
 				switch field.Type.String() {
 				case "[]string":
 					for _, d := range data {
